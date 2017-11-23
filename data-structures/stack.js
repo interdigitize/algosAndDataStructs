@@ -58,7 +58,7 @@ function Stack(capacity) {
 
 Stack.prototype.push = function(val) {
   //Check if adding a value doesn't exceed capacity
-  if (this._size + 1 <= this._capacity) {
+  if (this._size < this._capacity) {
     //add the value to storage
     this._storage[this._size] = val;
     //increment the size
@@ -113,7 +113,7 @@ Stack.prototype.until = function(val) {
   //start at the end of the string and find the value
   for (var i = this._size - 1; i >= 0; i--) {
     if (this._storage[i] === val) {
-      return count;
+      return ++count;
     }
     count++;
   }
@@ -129,7 +129,7 @@ var assert = function (actual, expected) {
   if (actual === expected) {
     return console.log('PASSED')
   }
-  return `Expected ${actual} to be ${expected}`;
+  return console.log(`Expected ${actual} to be ${expected}`);
 }
 
 var colors = new Stack(3);
@@ -141,13 +141,14 @@ assert(colors.pop(), 'blue');
 assert(colors.peek(), 'red');
 assert(colors.contains('yellow'), true);
 assert(colors.contains('aquamarine'), false);
-assert(colors.push(), 'purple');
+assert(colors.push('purple'), 3);
 assert(colors.peek(), 'purple');
 assert(colors.count(), 3);
 assert(colors.until('yellow'), 3);
 assert(colors.pop(), 'purple');
 assert(colors.pop(), 'red');
-assert(colors.count(), 1);
+assert(colors.pop(), 'yellow');
+assert(colors.count(), 0);
 
 
 /*
