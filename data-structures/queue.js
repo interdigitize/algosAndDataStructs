@@ -50,20 +50,17 @@ What's the time complexity?
 function Queue(capacity) {
   this._storage = {};
   this._capacity = capacity;
-  this._size = 0;
   this._last = 0;
   this._first = 0
 }
 
 Queue.prototype.enqueue = function(value) {
   //if adding the value doesn't exceed capacity
-  if(this._size < this._capacity) {
+  if(this.count() < this._capacity) {
     //add it
-    this._storage[this._last] = value;
-    //increment the size and last;
-    this._last++
+    this._storage[this._last++] = value;
     //return the size
-    return ++this._size;
+    return this.count();
   }
   //return
   return 'Max capacity already reached. Remove element before adding a new one.'
@@ -75,10 +72,8 @@ Queue.prototype.dequeue = function() {
   let first = this._storage[this._first];
   // remove the first item
   delete this._storage[this._first];
-  // decrement the size
-  this._size--
   // increment the first item
-  this._first++
+  if (this._first < this._last) this._first++;
   // return the item
   return first;
 
@@ -94,7 +89,7 @@ Queue.prototype.peek = function() {
 
 Queue.prototype.count = function() {
   // return the size
-  return this._size;
+  return this._last - this._first;
 };
 // Time complexity: constant O(1)
 
