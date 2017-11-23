@@ -45,35 +45,107 @@ myQueue.until(7)
 => 3
 What's the time complexity?
 
-
-
-
  */
 
 function Queue(capacity) {
-  // implement me...
+  this._storage = {};
+  this._capacity = capacity;
+  this._size = 0;
+  this._last = 0;
+  this._first = 0
 }
 
 Queue.prototype.enqueue = function(value) {
-  // implement me...
+  //if adding the value doesn't exceed capacity
+  if(this._size < this._capacity) {
+    //add it
+    this._storage[this._last] = value;
+    //increment the size and last;
+    this._last++
+    //return the size
+    return ++this._size;
+  }
+  //return
+  return 'Max capacity already reached. Remove element before adding a new one.'
 };
-// Time complexity:
+// Time complexity: constant O(1)
 
 Queue.prototype.dequeue = function() {
-  // implement me...
+  //get the first item in the Queue
+  let first = this._storage[this._first];
+  // remove the first item
+  delete this._storage[this._first];
+  // decrement the size
+  this._size--
+  // increment the first item
+  this._first++
+  // return the item
+  return first;
+
 };
-// Time complexity:
+// Time complexity: constant O(1)
 
 Queue.prototype.peek = function() {
-  // implement me...
+  // return the first item
+  return this._storage[this._first];
 };
+// Time complexity: constant O(1)
+
 
 Queue.prototype.count = function() {
-  // implement me...
+  // return the size
+  return this._size;
 };
-// Time complexity:
+// Time complexity: constant O(1)
 
+Queue.prototype.contains = function(val) {
+  for (let item in this._storage) {
+    if (val === this._storage[item]) {
+      return true;
+    }
+  }
+  return false;
+}
+// Time complexity: linear O(n)
 
+Queue.prototype.until = function (val) {
+  let count = 1;
+  for (let i = this._first; i <= this._last; i++) {
+    if (this._storage[i] === val) {
+      return count;
+    } else {
+      count++;
+    }
+  }
+  return 'The item is not in the queue.'
+}
+
+//-------------TESTS-------------
+
+var assert = function (actual, expected) {
+  if (actual === expected) {
+    return console.log('PASSED')
+  }
+  return console.log(`Expected ${actual} to be ${expected}`);
+}
+
+var line = new Queue(3);
+assert(line.enqueue('Ringo'), 1);
+assert(line.enqueue('Paul'), 2);
+assert(line.enqueue('George'), 3);
+assert(line.enqueue('John'), 'Max capacity already reached. Remove element before adding a new one.');
+assert(line.count(), 3);
+assert(line.dequeue(), 'Ringo');
+assert(line.count(), 2);
+assert(line.peek(), 'Paul');
+assert(line.dequeue(), 'Paul');
+assert(line.peek(), 'George');
+assert(line.enqueue('John'), 2);
+assert(line.contains('John'), true);
+assert(line.contains('Ringo'), false);
+assert(line.until('John'), 2);
+assert(line.until('George'), 1);
+assert(line.until('Ringo'), 'The item is not in the queue.');
 
 /*
 *** Exercises:
