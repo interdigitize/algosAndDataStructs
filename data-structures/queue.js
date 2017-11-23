@@ -119,6 +119,8 @@ Queue.prototype.until = function (val) {
   }
   return 'The item is not in the queue.'
 }
+// Time complexity: linear O(n)
+
 
 //-------------TESTS-------------
 
