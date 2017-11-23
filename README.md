@@ -1,4 +1,5 @@
 # Exercises for Algorithms and Data Structures in JavaScript
+Review exercises from https://github.com/kuychaco/algoClass
 
 ### Day 1
 1. Implement a stack data structure:
