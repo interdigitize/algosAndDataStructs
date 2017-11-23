@@ -59,10 +59,8 @@ function Stack(capacity) {
 Stack.prototype.push = function(val) {
   //Check if adding a value doesn't exceed capacity
   if (this._size < this._capacity) {
-    //add the value to storage
-    this._storage[this._size] = val;
-    //increment the size
-    this._size++
+    //add the value to storage and increment the size
+    this._storage[this._size++] = val;
     //return the size
     return this._size
   }
@@ -72,12 +70,13 @@ Stack.prototype.push = function(val) {
 
 Stack.prototype.pop = function() {
   //get the last item
-  let item = this._storage[this._size - 1]
+  let item = this._storage[--this._size]
   //Remove the item from storage
-  delete this._storage[this._size - 1];
-  //Decrement the size
-  this._size--
-  //return the item
+  delete this._storage[this._size];
+  //make sure the count doesn't go below 0
+  if (this._count < 0) {
+    this._count = 0;
+  }
   return item;
 };
 // Time complexity: Constant
@@ -109,11 +108,11 @@ Stack.prototype.contains = function(val) {
 
 Stack.prototype.until = function(val) {
   //count to return
-  let count = 0;
+  let count = 1;
   //start at the end of the string and find the value
   for (var i = this._size - 1; i >= 0; i--) {
     if (this._storage[i] === val) {
-      return ++count;
+      return count;
     }
     count++;
   }
